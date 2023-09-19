@@ -1,11 +1,14 @@
 import { QueryConfig } from "pg";
 import { IProduct } from "../interfaces/product";
 import { client } from "../database/database";
+import format from "pg-format";
 
-export const getProducts = async () => {   
-    const queryString = `SELECT * FROM products`;
+export const getProducts = async (categoryId?: string) => {   
+    const filterCategory = categoryId ? `WHERE category_id = ${categoryId}` : "";
 
-    const data = await client.query(queryString);
+    const query = format(`SELECT * FROM products %s;`, filterCategory);
+
+    const data = await client.query(query);
 
     return data.rows;
 }

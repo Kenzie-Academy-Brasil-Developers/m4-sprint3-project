@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
 import { createProduct, getProducts } from "../services/products.service";
 
+
 export const getProductsController = async (req: Request, res: Response) => {
     const { category } = req.query;
 
-    const response = await getProducts();
+    const response = await getProducts(category as string);
 
     res.status(200).json(response);
 }
