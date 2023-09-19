@@ -2,6 +2,14 @@ import { QueryConfig } from "pg";
 import { IProduct } from "../interfaces/product";
 import { client } from "../database/database";
 
+export const getProducts = async () => {   
+    const queryString = `SELECT * FROM products`;
+
+    const data = await client.query(queryString);
+
+    return data.rows;
+}
+
 export const createProduct = async (body: Omit<IProduct, 'id'>) => {
     const { name, price, category_id } = body;
 
